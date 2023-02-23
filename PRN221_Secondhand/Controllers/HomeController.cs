@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using PRN221_Secondhand.Models;
+using Repository.Repository;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -20,7 +21,9 @@ namespace PRN221_Secondhand.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            UserRepository _userRepo = new UserRepository();
+            var _listUser = _userRepo.GetAll();
+            return View(_listUser);
         }
 
         public IActionResult Privacy()

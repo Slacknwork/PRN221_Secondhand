@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 #nullable disable
 
-namespace PRN221_Secondhand.Models
+namespace Repository.Models
 {
     public partial class Wish
     {
