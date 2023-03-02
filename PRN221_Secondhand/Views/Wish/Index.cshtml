@@ -1,0 +1,80 @@
+﻿@{
+    ViewData["Title"] = "Wish Index Page";
+    int count = 1;
+}
+@model IEnumerable<Repository.Models.Wish>
+
+
+<h1 style="margin-bottom:20px ;" class="display-4">WISHLIST</h1>
+
+@if (Model == null || Model.Count() == 0)
+{
+    <h1 style="margin-top : 30px ; margin-bottom:10px ; text-align:center">Nothing here!</h1>
+    <div class="text-center"> 
+
+    <a class="" href="/home">Add More</a>
+    </div>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    Number
+                </th>
+                <th>
+                    Category
+                </th>
+                <th>
+                    Post Image
+                </th>
+                <th>
+                    Post Name
+                </th>
+                <th>
+                    Status
+                </th>
+                <th>
+                    Delete Action
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => count)
+                        @{
+                            count++;
+                        }
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Post.Category.Name)
+                    </td>
+                    <td>
+                        <img style="height:120px ; width : 200px ;" src="@Url.Content(item.Post.Image)" alt="alternative text" />
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Post.Name)
+                    </td>
+                    <td>
+                        @{
+                            String statusInText = null;
+                            if (item.Post.Status == 1)
+                            {
+                                statusInText = "Active";
+                            }
+                            else statusInText = "InActive";
+                        }
+                        @Html.DisplayFor(modelItem => statusInText)
+                    </td>
+                    <td>
+                        <a class="btn btn-danger" href="/wish/remove?id=@item.Id">X</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
