@@ -21,9 +21,9 @@ namespace PRN221_Secondhand.Controllers
 
         public IActionResult Index()
         {
-            UserRepository _userRepo = new UserRepository();
-            var _listUser = _userRepo.GetAll();
-            return View(_listUser);
+            PostRepository _postRepo = new PostRepository();
+            var _listPost= _postRepo.GetAll();
+            return View(_listPost);
         }
 
         public IActionResult Privacy()
@@ -35,6 +35,10 @@ namespace PRN221_Secondhand.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+        public IActionResult Search()
+        {
+            return View();
         }
     }
 }

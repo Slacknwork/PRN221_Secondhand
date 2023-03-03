@@ -1,0 +1,30 @@
+﻿@@{
+    ViewData["Title"] = "Profile Index Page";
+}
+@model Repository.Models.User
+
+<h1 style="margin-bottom:20px ;" class="display-4">PROFILE</h1>
+<div class="text-center"> 
+    <a class="" href="/Profile/ChangePassword">Change Password</a>
+</div>
+<form action="/Profile/Edit" method="post">
+    @Html.HiddenFor(p=>p.Id)
+    <div class="text-center">
+        @Html.LabelFor(p=>p.Name)
+        @Html.EditorFor(p=>p.Name)
+        </div>
+    <div class="text-center">
+            @Html.LabelFor(p=>p.Avatar)
+            @Html.EditorFor(p=>p.Avatar)
+    </div>
+    <div class="text-center">
+            @Html.LabelFor(p=>p.Phone)
+            @Html.EditorFor(p=>p.Phone)
+    </div>
+    <div class="text-center">
+            @Html.LabelFor(p=>p.Email)
+            @Html.EditorFor(p=>p.Email)
+    </div>
+
+    <input type="submit" value="Edit" />
+</form>
