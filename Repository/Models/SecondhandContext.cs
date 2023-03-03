@@ -1,8 +1,6 @@
 ﻿using System;
-using System.IO;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.Extensions.Configuration;
 
 #nullable disable
 
@@ -31,32 +29,23 @@ namespace Repository.Models
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer(GetConnectionString());
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
+                optionsBuilder.UseSqlServer("Server=(local);Uid=sa;Pwd=12345;Database=Secondhand");
             }
-        }
-
-        private string GetConnectionString()
-        {
-            IConfiguration config = new ConfigurationBuilder()
-                .SetBasePath(Directory.GetCurrentDirectory())
-                .AddJsonFile("appsettings.json", true, true)
-                .Build();
-            var strConn = config["ConnectionStrings:Secondhand"];
-            return strConn;
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.HasAnnotation("Relational:Collation", "SQL_Latin1_General_CP1_CI_AS");
+            modelBuilder.HasAnnotation("Relational:Collation", "Latin1_General_CI_AS");
 
             modelBuilder.Entity<Admin>(entity =>
             {
                 entity.ToTable("Admin");
 
                 entity.Property(e => e.Id)
-                    .HasMaxLength(16)
-                    .HasColumnName("ID")
-                    .IsFixedLength(true);
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("ID");
 
                 entity.Property(e => e.Name)
                     .HasMaxLength(30)
@@ -76,9 +65,9 @@ namespace Repository.Models
                 entity.ToTable("Category");
 
                 entity.Property(e => e.Id)
-                    .HasMaxLength(16)
-                    .HasColumnName("ID")
-                    .IsFixedLength(true);
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("ID");
 
                 entity.Property(e => e.Description).HasColumnType("text");
 
@@ -92,14 +81,14 @@ namespace Repository.Models
                 entity.ToTable("Post");
 
                 entity.Property(e => e.Id)
-                    .HasMaxLength(16)
-                    .HasColumnName("ID")
-                    .IsFixedLength(true);
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("ID");
 
                 entity.Property(e => e.CategoryId)
-                    .HasMaxLength(16)
-                    .HasColumnName("Category_ID")
-                    .IsFixedLength(true);
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("Category_ID");
 
                 entity.Property(e => e.Created).HasColumnType("datetime");
 
@@ -113,10 +102,20 @@ namespace Repository.Models
 
                 entity.Property(e => e.Updated).HasColumnType("datetime");
 
+                entity.Property(e => e.UserId)
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("User_ID");
+
                 entity.HasOne(d => d.Category)
                     .WithMany(p => p.Posts)
                     .HasForeignKey(d => d.CategoryId)
-                    .HasConstraintName("FK__Post__Category_I__60A75C0F");
+                    .HasConstraintName("FK__Post__Category_I__67152DD3");
+
+                entity.HasOne(d => d.User)
+                    .WithMany(p => p.Posts)
+                    .HasForeignKey(d => d.UserId)
+                    .HasConstraintName("FK__Post__User_ID__6809520C");
             });
 
             modelBuilder.Entity<Tag>(entity =>
@@ -124,9 +123,9 @@ namespace Repository.Models
                 entity.ToTable("Tag");
 
                 entity.Property(e => e.Id)
-                    .HasMaxLength(16)
-                    .HasColumnName("ID")
-                    .IsFixedLength(true);
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("ID");
 
                 entity.Property(e => e.Type).HasMaxLength(50);
 
@@ -138,29 +137,29 @@ namespace Repository.Models
                 entity.ToTable("Tag_Post");
 
                 entity.Property(e => e.Id)
-                    .HasMaxLength(16)
-                    .HasColumnName("ID")
-                    .IsFixedLength(true);
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("ID");
 
                 entity.Property(e => e.PostId)
-                    .HasMaxLength(16)
-                    .HasColumnName("Post_ID")
-                    .IsFixedLength(true);
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("Post_ID");
 
                 entity.Property(e => e.TagId)
-                    .HasMaxLength(16)
-                    .HasColumnName("Tag_ID")
-                    .IsFixedLength(true);
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("Tag_ID");
 
                 entity.HasOne(d => d.Post)
                     .WithMany(p => p.TagPosts)
                     .HasForeignKey(d => d.PostId)
-                    .HasConstraintName("FK__Tag_Post__Post_I__693CA210");
+                    .HasConstraintName("FK__Tag_Post__Post_I__709E980D");
 
                 entity.HasOne(d => d.Tag)
                     .WithMany(p => p.TagPosts)
                     .HasForeignKey(d => d.TagId)
-                    .HasConstraintName("FK__Tag_Post__Tag_ID__6A30C649");
+                    .HasConstraintName("FK__Tag_Post__Tag_ID__7192BC46");
             });
 
             modelBuilder.Entity<User>(entity =>
@@ -168,9 +167,9 @@ namespace Repository.Models
                 entity.ToTable("User");
 
                 entity.Property(e => e.Id)
-                    .HasMaxLength(16)
-                    .HasColumnName("ID")
-                    .IsFixedLength(true);
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("ID");
 
                 entity.Property(e => e.Avatar).HasColumnType("text");
 
@@ -181,9 +180,9 @@ namespace Repository.Models
                     .IsUnicode(false);
 
                 entity.Property(e => e.ExternalLoginId)
-                    .HasMaxLength(16)
-                    .HasColumnName("EXTERNAL_LOGIN_ID")
-                    .IsFixedLength(true);
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("EXTERNAL_LOGIN_ID");
 
                 entity.Property(e => e.Name).HasMaxLength(50);
 
@@ -203,31 +202,31 @@ namespace Repository.Models
                 entity.ToTable("Wish");
 
                 entity.Property(e => e.Id)
-                    .HasMaxLength(16)
-                    .HasColumnName("ID")
-                    .IsFixedLength(true);
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("ID");
 
                 entity.Property(e => e.Created).HasColumnType("datetime");
 
                 entity.Property(e => e.PostId)
-                    .HasMaxLength(16)
-                    .HasColumnName("Post_ID")
-                    .IsFixedLength(true);
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("Post_ID");
 
                 entity.Property(e => e.UserId)
-                    .HasMaxLength(16)
-                    .HasColumnName("User_ID")
-                    .IsFixedLength(true);
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .HasColumnName("User_ID");
 
                 entity.HasOne(d => d.Post)
                     .WithMany(p => p.Wishes)
                     .HasForeignKey(d => d.PostId)
-                    .HasConstraintName("FK__Wish__Post_ID__6477ECF3");
+                    .HasConstraintName("FK__Wish__Post_ID__6BD9E2F0");
 
                 entity.HasOne(d => d.User)
                     .WithMany(p => p.Wishes)
                     .HasForeignKey(d => d.UserId)
-                    .HasConstraintName("FK__Wish__User_ID__6383C8BA");
+                    .HasConstraintName("FK__Wish__User_ID__6AE5BEB7");
             });
 
             OnModelCreatingPartial(modelBuilder);

@@ -12,7 +12,7 @@ namespace Repository.Models
             TagPosts = new HashSet<TagPost>();
         }
 
-        public byte[] Id { get; set; }
+        public string Id { get; set; }
         public string Type { get; set; }
         public string Value { get; set; }
         public int? Status { get; set; }

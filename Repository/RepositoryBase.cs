@@ -21,7 +21,7 @@ namespace Repository
         {
 
             return _dbSet;
-        } public T Get(byte[] id)
+        } public T Get(string id)
         {
 
             return _dbSet.Find(id);

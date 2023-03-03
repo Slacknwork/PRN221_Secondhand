@@ -7,9 +7,9 @@ namespace Repository.Models
 {
     public partial class Wish
     {
-        public byte[] Id { get; set; }
-        public byte[] UserId { get; set; }
-        public byte[] PostId { get; set; }
+        public string Id { get; set; }
+        public string UserId { get; set; }
+        public string PostId { get; set; }
         public DateTime? Created { get; set; }
         public int? Status { get; set; }
 

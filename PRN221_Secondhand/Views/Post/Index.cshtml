@@ -1,0 +1,91 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@model IEnumerable<Repository.Models.Post>
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+/* Add a gray background color with some padding */
+
+/* Header/Blog Title */
+
+/* Create two unequal columns that floats next to each other */
+/* Left column */
+.leftcolumn {
+    box-sizing: border-box;
+    font-family: Arial;
+    padding: 20px;
+    background: #f1f1f1;
+    float: left;
+    width: 75%;
+}
+
+/* Right column */
+.rightcolumn {
+  float: left;
+  width: 25%;
+  padding-left: 20px;
+}
+
+/* Fake image */
+.fakeimg {
+  background-color: #aaa;
+  width: 100%;
+  padding: 20px;
+}
+
+/* Add a card effect for articles */
+.card {
+   background-color: white;
+   padding: 20px;
+   margin-top: 20px;
+}
+
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+/* Footer */
+.footer {
+  padding: 20px;
+  text-align: center;
+  background: #ddd;
+  margin-top: 20px;
+}
+
+</style>
+
+</head>
+
+<body>
+   
+<div class="row">
+        
+        <div class="leftcolumn">
+            <a class="btn btn-danger" href="/Post/createPost">Create Post</a>
+        @foreach (var items in Model)
+        {
+            if (items.Status == 1)
+            {
+                <div class="card">
+                    <h2>@items.Name</h2>
+                    <h5>Created: @items.Created - Updated: @items.Updated</h5>
+                    <h5>Category: @items.Category.Name</h5>
+                        <img src="@items.Image" alt="@items.Name" style="height:auto;width:auto">
+                    <p>@items.Description</p>
+                    <a class="btn btn-danger" href="/Post/editPost?id=@items.Id" style="margin-bottom:5px">Edit</a>
+                    <a class="btn btn-danger" href="/Post/deletePost?id=@items.Id">Delete</a>
+                </div>           
+            }
+        } 
+        </div>
+</div>
+
+</body>
+</html>
+
