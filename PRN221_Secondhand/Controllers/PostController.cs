@@ -7,7 +7,7 @@ using System;
 using System.Dynamic;
 using System.Linq;
 using System.Text;
-
+using X.PagedList;
 namespace PRN221_Secondhand.Controllers
 {
     public class PostController : Controller
@@ -19,10 +19,12 @@ namespace PRN221_Secondhand.Controllers
         {
             _logger = logger;
         }
-        public IActionResult Index()
+        public IActionResult Index(int? page)
         {
+            int pageSize = 8;
+            int pageNumber = (page ?? 1);
             var listPost = postRepository.GetAll().Include(p => p.Category);
-            return View(listPost);
+            return View(listPost.ToPagedList(pageNumber,pageSize));
         }
         public IActionResult createPost()
         {

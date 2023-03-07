@@ -1,7 +1,9 @@
 ﻿@*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
-@model IEnumerable<Repository.Models.Post>
+@using X.PagedList;
+@using X.PagedList.Mvc.Core
+@model IPagedList<Repository.Models.Post>
 <!DOCTYPE html>
 <html>
 <head>
@@ -49,7 +51,16 @@
   display: table;
   clear: both;
 }
-
+.pagination li {
+        text-align: center;
+        margin-left: 5px;
+        color: #000000;
+        background-color: #b3b3ff;
+        border-color: #17a2b8;
+        font-size: 20px;
+        width: 35px;
+        text-align: center;
+    }
 /* Footer */
 .footer {
   padding: 20px;
@@ -65,7 +76,6 @@
 <body>
    
 <div class="row">
-        
         <div class="leftcolumn">
             <a class="btn btn-primary" href="/Post/createPost">Create Post</a>
         @foreach (var items in Model)
@@ -89,8 +99,14 @@
                             <img src="@items.Image" alt="@items.Name" style="height:auto;width:auto">  
                 </div>           
             }
-        } 
+        }
+            Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+            @Html.PagedListPager((IPagedList)Model, page => Url.Action("Index", new { page }))
         </div>
+        
+
+
+        
 </div>
 </body>
 </html>
