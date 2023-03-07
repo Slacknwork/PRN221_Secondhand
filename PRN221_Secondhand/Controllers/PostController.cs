@@ -26,25 +26,37 @@ namespace PRN221_Secondhand.Controllers
         }
         public IActionResult createPost()
         {
-            var category = categoryRepository.GetAll();
-            return View(new Post());
+            dynamic mymodel = new ExpandoObject();
+            mymodel.Posts = new Post();
+            mymodel.Categories = categoryRepository.GetAll();
+            return View(mymodel);
         }
         [HttpGet]
         public IActionResult editPost(string id)
         {
-            var post = postRepository.GetAll()
-                    .Where(p => p.Id == id).Include(p => p.Category).FirstOrDefault();
-            return View(post);
+            dynamic mymodel = new ExpandoObject();
+            mymodel.Post = postRepository.GetAll()
+                    .Where(p => p.Id == id).Include(p => p.Category).ToList(); 
+            mymodel.Categories = categoryRepository.GetAll();
+            //var post = postRepository.GetAll()
+                    //.Where(p => p.Id == id).Include(p => p.Category).FirstOrDefault();
+            return View(mymodel);
         }
         [HttpPost]
         public IActionResult createPost(Post post)
         {
+            Guid myuuid = Guid.NewGuid();
+            DateTime today = DateTime.Today;
+            post.Id = myuuid.ToString();
+            post.Created = today;
+            post.Status = 1;
             postRepository.Create(post);
             return RedirectToAction("Index");
         }
         [HttpPost]
         public IActionResult editPost(Post post)
         {
+            DateTime today = DateTime.Today;
             var obj = postRepository.GetAll()
                     .Where(p => p.Id == post.Id).FirstOrDefault();
             if (obj != null)
@@ -57,7 +69,7 @@ namespace PRN221_Secondhand.Controllers
                 obj.UserId = post.UserId;
                 obj.Price = post.Price;
                 obj.Created = post.Created;
-                obj.Updated = post.Updated;
+                obj.Updated = today;
                 obj.Status = post.Status;
                 postRepository.Update(obj);
             }

@@ -3,19 +3,22 @@
 *@
 @{
 }
-@model Repository.Models.Post
+@model dynamic
+
 <form action="createPost" method="post">
     <div class="form-group">
-        <input type="text" name="Id" placeholder="PostId" />
-        <input type="text" name="Name" placeholder="Name" />
-        <input type="text" name="Image" placeholder="Image" />
-        <input type="text" name="Description" placeholder="Description" />
-        <input type="text" name="CategoryId" placeholder="CategoryId" />
-        <input type="text" name="UserId" placeholder="UserId" />
-        <input type="number" name="Price" min="0" value="0" step=".01">
-        <input type="date" id="Created" name="Created">
-        <input type="date" id="Updated" name="Updated">
-        <input type="number" name="Status" min="0" max="1" value="0" step="any">
-        <input type="submit" value="Create" class="btn btn-danger" />
+        <label for="Name">Post Name: </label><input type="text" name="Name" placeholder="Name" style="margin-bottom:5px" /><br>
+        <label for="Image">Image Link: </label><input type="text" name="Image" placeholder="Image" style="margin-bottom:5px" /><br>
+        <label for="Description">Description: </label><input type="text" name="Description" placeholder="Description" style="margin-bottom:5px" /><br>
+        <label for="CategoryId" style="margin-bottom:5px">Choose a category:</label>
+        <select name="CategoryId" id="CategoryId">
+        @foreach (var cate in Model.Categories)
+        {
+                <option value="@cate.Id">@cate.Name</option>           
+        }
+        </select><br>
+        <label for="UserId">User ID: </label><input type="text" name="UserId" placeholder="UserId" style="margin-bottom:5px" /><br>
+        <label for="Price">Price: </label><input type="number" name="Price" min="0" value="0" step=".01" style="margin-bottom:5px"><br>
+        <input type="submit" value="Create" class="btn btn-danger" style="margin-bottom:5px" />
     </div>
 </form>
