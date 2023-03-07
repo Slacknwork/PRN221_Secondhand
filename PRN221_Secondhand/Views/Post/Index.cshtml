@@ -67,25 +67,31 @@
 <div class="row">
         
         <div class="leftcolumn">
-            <a class="btn btn-danger" href="/Post/createPost">Create Post</a>
+            <a class="btn btn-primary" href="/Post/createPost">Create Post</a>
         @foreach (var items in Model)
         {
             if (items.Status == 1)
             {
                 <div class="card">
-                    <h2>@items.Name</h2>
-                    <h5>Created: @items.Created - Updated: @items.Updated</h5>
-                    <h5>Category: @items.Category.Name</h5>
-                        <img src="@items.Image" alt="@items.Name" style="height:auto;width:auto">
-                    <p>@items.Description</p>
-                    <a class="btn btn-danger" href="/Post/editPost?id=@items.Id" style="margin-bottom:5px">Edit</a>
-                    <a class="btn btn-danger" href="/Post/deletePost?id=@items.Id">Delete</a>
+                        <div class="form-group">
+                            <a class="btn btn-danger float-right" onclick="return confirm('Are you sure you want to delete this post ?');" href="/Post/deletePost?id=@items.Id">Delete</a>
+                            <a class="btn btn-secondary float-right" href="/Post/editPost?id=@items.Id" style="margin-right:5px">Edit</a>
+                            <h2>@items.Name</h2>
+                            <p>Created: @items.Created
+                            @if (@items.Updated != null)
+                            {
+                                <span> - Updated: @items.Updated</span>
+                                }
+                            </p>
+                            <p>Category: @items.Category.Name</p>
+                            <h4>@items.Description</h4>
+                        </div>
+                            <img src="@items.Image" alt="@items.Name" style="height:auto;width:auto">  
                 </div>           
             }
         } 
         </div>
 </div>
-
 </body>
 </html>
 
