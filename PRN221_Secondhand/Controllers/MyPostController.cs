@@ -10,12 +10,12 @@ using System.Text;
 using X.PagedList;
 namespace PRN221_Secondhand.Controllers
 {
-    public class PostController : Controller
+    public class MyPostController : Controller
     {
         PostRepository postRepository = new PostRepository();
         CategoryRepository categoryRepository = new CategoryRepository();
-        private readonly ILogger<PostController> _logger;
-        public PostController(ILogger<PostController> logger)
+        private readonly ILogger<MyPostController> _logger;
+        public MyPostController(ILogger<MyPostController> logger)
         {
             _logger = logger;
         }
