@@ -27,6 +27,18 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Post" asp-action="Index">Post</a>
                         </li>
+                        <form action="/Home/Search" method="get">
+                            <input type="text" name="key" />
+                            <button type="submit">search</button>
+                        </form>
+                        @if (Context.Session.GetString("username") == null)
+                        {
+                            <li><a class="nav-link text-dark" asp-area="" asp-controller="Login" asp-action="Index">Login</a></li>
+                            <li><a class="nav-link text-dark" asp-area="" asp-controller="Profile" asp-action="Register">Resgister</a></li>
+                        }else{
+                            <li><a class="nav-link text-dark" asp-area="" asp-controller="Profile" asp-action="Index">@Context.Session.GetString("username")</a></li>
+                            <li><a class="nav-link text-dark" asp-area="" asp-controller="Login" asp-action="Logout">Logout</a></li>
+                        }
                     </ul>
                 </div>
             </div>
