@@ -1,0 +1,39 @@
+﻿@using Microsoft.AspNetCore.Http;
+@{
+    ViewData["Title"] = "Register Page";
+}
+@model Repository.Models.User
+
+<h1 style="margin-bottom:20px ;" class="display-4">PROFILE</h1>
+@if (@Context.Session.GetString("userid")!=null)
+{
+        <h1 style="margin-top : 30px ; margin-bottom:10px ; text-align:center; color:red">Already logged in!</h1>
+
+}
+else
+{
+    <div class="text-center">
+        <form action="/Profile/Register" method="post"> <br />
+            <input type="text" name="name" placeholder="Enter name" />
+
+    <br />
+            <input type="text" name="avatar" placeholder="Enter avatar link" />
+
+    <br />
+            <input type="text" name="phone" placeholder="Enter phone number" />
+
+    <br />
+            <input type="text" name="email" placeholder="Enter email" />
+
+    <br />
+            <input type="password" name="password" placeholder="Enter password" />
+
+    <br />
+            <input type="password" name="confirmPassword" placeholder="Confirm password" />
+
+    <br />
+
+        <input type="submit" value="Register" class="btn btn-danger" />
+    </form>
+    </div>
+}
