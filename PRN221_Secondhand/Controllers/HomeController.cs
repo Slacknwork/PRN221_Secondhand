@@ -27,10 +27,6 @@ namespace PRN221_Secondhand.Controllers
         {
             PostRepository _postRepo = new PostRepository();
             var _listPost = _postRepo.GetAll().Where(item => item.Status != 0).ToList();
-            //CategoryRepository _categoryRepository = new CategoryRepository();
-            //var _listCate = _categoryRepository.GetAll().Where(item => item.Status != 0).ToList();
-
-            //HttpContext.Session.SetString("cate", JsonConvert.SerializeObject(_listCate));
             return View(_listPost);
         }
 
@@ -49,6 +45,7 @@ namespace PRN221_Secondhand.Controllers
         public IActionResult Search(string key)
         {
             PostRepository _postRepo = new PostRepository();
+            TempData["key"] = key;
             var _listPost = _postRepo.GetAll().Where(item => item.Status != 0 && item.Name.Contains(key)).ToList();
             return View(_listPost);
         }
