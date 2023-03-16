@@ -26,7 +26,7 @@ namespace PRN221_Secondhand
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
-
+            services.AddSession();
             services.AddDbContext<SecondhandContext>(options => options.UseSqlServer(
                 Configuration.GetConnectionString("Secondhand")
                 ));
