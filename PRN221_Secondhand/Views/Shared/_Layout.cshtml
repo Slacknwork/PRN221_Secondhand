@@ -12,6 +12,8 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - PRN221_Secondhand</title>
+    
+    <link rel="stylesheet" href="~/css/bootswatch.css" />
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
 </head>
@@ -35,6 +37,11 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="MyPost" asp-action="Index">MyPost</a>
                         </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link text-dark float-right" asp-area="" asp-controller="Admin" asp-action="Index">Admin</a>
+                        </li>
+
                         <form action="/Home/Search" method="get">
                             <input type="text" name="key" />
                             <button type="submit">search</button>
@@ -47,6 +54,7 @@
                             <li><a class="nav-link text-dark" asp-area="" asp-controller="Login" asp-action="Index">@Context.Session.GetString("username")</a></li>
                             <li><a class="nav-link text-dark" asp-area="" asp-controller="Login" asp-action="Logout">Logout</a></li>
                         }
+
                     </ul>
                     @{
                         //List<Category> listcate = JsonConvert.
