@@ -1,91 +1,63 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@model IEnumerable<Repository.Models.Post>
-<!DOCTYPE html>
-<html>
-<head>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<style>
-/* Add a gray background color with some padding */
-
-/* Header/Blog Title */
-
-/* Create two unequal columns that floats next to each other */
-/* Left column */
-.leftcolumn {
-    box-sizing: border-box;
-    font-family: Arial;
-    padding: 20px;
-    background: #f1f1f1;
-    float: left;
-    width: 75%;
+﻿
+@{
 }
+@model Repository.Models.Post
 
-/* Right column */
-.rightcolumn {
-  float: left;
-  width: 25%;
-  padding-left: 20px;
-}
-
-/* Fake image */
-.fakeimg {
-  background-color: #aaa;
-  width: 100%;
-  padding: 20px;
-}
-
-/* Add a card effect for articles */
-.card {
-   background-color: white;
-   padding: 20px;
-   margin-top: 20px;
-}
-
-/* Clear floats after the columns */
-.row:after {
-  content: "";
-  display: table;
-  clear: both;
-}
-
-/* Footer */
-.footer {
-  padding: 20px;
-  text-align: center;
-  background: #ddd;
-  margin-top: 20px;
-}
-
-</style>
-
-</head>
-
-<body>
-   
-<div class="row">
-        
-        <div class="leftcolumn">
-            <a class="btn btn-danger" href="/Post/createPost">Create Post</a>
-        @foreach (var items in Model)
-        {
-            if (items.Status == 1)
-            {
-                <div class="card">
-                    <h2>@items.Name</h2>
-                    <h5>Created: @items.Created - Updated: @items.Updated</h5>
-                    <h5>Category: @items.Category.Name</h5>
-                        <img src="@items.Image" alt="@items.Name" style="height:auto;width:auto">
-                    <p>@items.Description</p>
-                    <a class="btn btn-danger" href="/Post/editPost?id=@items.Id" style="margin-bottom:5px">Edit</a>
-                    <a class="btn btn-danger" href="/Post/deletePost?id=@items.Id">Delete</a>
-                </div>           
-            }
-        } 
+@*<h4>@Model.Price</h4>
+<h4>@Model.Name</h4>
+<h4>@Model.Description</h4>
+<img src="@Model.Image"/>
+<h4>@Model.Created</h4>*@
+<!-- Shop Detail Start -->
+<div class="container-fluid pb-5">
+    <div class="row px-xl-5">
+        <div class="col-lg-5 mb-30">
+            <div id="product-carousel" class="carousel slide" data-ride="carousel">
+                <div class="carousel-inner bg-light">
+                    <div class="carousel-item active">
+                        <img class="w-100 h-100" src="@Model.Image" alt="Image">
+                    </div>
+                </div>
+            </div>
         </div>
-</div>
 
-</body>
-</html>
+        <div class="col-lg-7 h-auto mb-30">
+            <div class="h-100 bg-light p-30">
+                <h3>@Model.Name</h3>
+                <h3 class="font-weight-semi-bold mb-4">@Model.Price</h3>
+                <p class="mb-4">
+                    Category @Model.Category.Name<br />
+                    Created Date: @Model.Created<br />
+                    Updated Date: @Model.Updated
+                </p>
+                
+                <div class="d-flex mb-4">
+
+                </div>
+                <div class="d-flex align-items-center mb-4 pt-2">
+                    <button class="btn btn-primary px-3">
+                        <i class="fas fa-heart mr-1"></i> Add To
+                        WishList
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row px-xl-5">
+        <div class="col">
+            <div class="bg-light p-30">
+                <div class="nav nav-tabs mb-4">
+                    <a class="nav-item nav-link text-dark active" data-toggle="tab" href="#tab-pane-1">Description</a>
+                </div>
+                <div class="tab-content">
+                    <div class="tab-pane fade show active" id="tab-pane-1">
+                        <h4 class="mb-3">Description</h4>
+                        <p>@Model.Description</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Shop Detail End -->
 

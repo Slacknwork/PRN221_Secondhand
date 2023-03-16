@@ -18,7 +18,9 @@ namespace Repository.Models
         public string Image { get; set; }
         public string Description { get; set; }
         public string CategoryId { get; set; }
+
         public string UserId { get; set; }
+
         public decimal? Price { get; set; }
         public DateTime? Created { get; set; }
         public DateTime? Updated { get; set; }

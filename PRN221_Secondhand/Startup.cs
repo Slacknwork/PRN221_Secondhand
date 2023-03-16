@@ -1,9 +1,11 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Repository.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,7 +26,12 @@ namespace PRN221_Secondhand
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
-        }
+
+            services.AddDbContext<SecondhandContext>(options => options.UseSqlServer(
+                Configuration.GetConnectionString("Secondhand")
+                ));
+        }   
+
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -43,7 +50,7 @@ namespace PRN221_Secondhand
             app.UseStaticFiles();
 
             app.UseRouting();
-
+            app.UseSession();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
@@ -52,11 +59,12 @@ namespace PRN221_Secondhand
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
             });
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
                   name: "areas",
-                  pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}"
+                  pattern: "admin/{controller=Home}/{action=Index}/{id?}"
                 );
             });
         }

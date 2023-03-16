@@ -25,20 +25,26 @@ namespace PRN221_Secondhand.Controllers
         }
         public IActionResult Create(string id)
         {
-            var userid = HttpContext.Session.GetString("userid");
-            if (userid != null)
-            {
-                Wish wish = new Wish();
-                Guid myuuid = Guid.NewGuid();
-                wish.Id = myuuid.ToString();
-                wish.Created = DateTime.Now;
-                wish.UserId = userid;
-                wish.Status = 1;
-                wishRepo.Create(wish);
-                TempData["ERROR"] = "Create wish succsessfully";
-            }
 
-            return RedirectToAction("Index", "Post");
+            string? userid = HttpContext.Session.GetString("userid");
+            var wishExits = wishRepo.GetAll().Where(p => p.PostId == id);
+            if (userid != null && wishExits == null)
+            {
+                    Wish wish = new Wish();
+                    Guid myuuid = Guid.NewGuid();
+                    wish.Id = myuuid.ToString();
+                    wish.Created = DateTime.Now;
+                    wish.UserId = userid;
+                    wish.PostId = id;
+                    wish.Status = 1;
+                    wishRepo.Create(wish);
+            }else if (wishExits != null)
+            {
+                TempData["ERROR"] = "This post already exits in wishlist";
+                return RedirectToAction("Index", "MyPost");
+            }
+            return RedirectToAction("Index", "MyPost");
+
         }
         public IActionResult Remove(string id)
         {

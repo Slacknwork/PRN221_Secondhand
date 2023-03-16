@@ -1,0 +1,73 @@
+﻿@model dynamic
+@{
+    ViewData["Title"] = "editPost";
+}
+<h1>Edit Post</h1>
+
+
+<h4>Post</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form action="editPost" method="post">
+            @foreach(var post in Model.Post){
+                <input type="hidden" name="Id" value="@post.Id">
+                <input type="hidden" name="Created" value="@post.Created">
+                <label for="Name">Post Name: </label>
+
+                <input type="text" name="Name" placeholder="Name" value="@post.Name" style="margin-bottom:5px" />
+
+                <br>
+                <label for="Image">Image Link: </label>
+
+                <input type="text" name="Image" placeholder="Image" value="@post.Image" style="margin-bottom:5px" />
+
+                <br>
+                <label for="Description">Description: </label>
+
+                <input type="text" name="Description" placeholder="Description" value="@post.Description" style="margin-bottom:5px" />
+
+                <br>
+                <label for="CategoryId" style="margin-bottom:5px">Choose a category:</label>
+                <select name="CategoryId" id="CategoryId">
+                    @foreach (var cate in Model.Categories)
+                    {
+                        @if (post.CategoryId == cate.Id)
+                        {
+                            <option value="@cate.Id" selected="selected">@cate.Name</option>
+                        }
+                        else
+                        {
+                            <option value="@cate.Id">@cate.Name</option>
+                        }
+                        
+                    }
+                </select>
+
+                <br>
+                <label for="Price">Price: </label>
+
+                <input type="number" name="Price" min="0" value="@post.Price" step=".01" style="margin-bottom:5px">
+
+                <br>
+                <label for="Status">Status: </label>
+                <select name="Status" id="Status">
+                    <option value="1" selected="selected">Visible</option>
+                    <option value="0">Hidden</option>
+                </select>
+                <br>
+            }
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
