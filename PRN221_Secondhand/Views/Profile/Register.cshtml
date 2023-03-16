@@ -3,8 +3,6 @@
     ViewData["Title"] = "Register Page";
 }
 @model Repository.Models.User
-
-<h1 style="margin-bottom:20px ;" class="display-4">PROFILE</h1>
 @if (@Context.Session.GetString("userid")!=null)
 {
         <h1 style="margin-top : 30px ; margin-bottom:10px ; text-align:center; color:red">Already logged in!</h1>
@@ -12,28 +10,45 @@
 }
 else
 {
-    <div class="text-center">
-        <form action="/Profile/Register" method="post"> <br />
-            <input type="text" name="name" placeholder="Enter name" />
+    <div class="tab-content" style="width: 400px; margin:auto;">
+  <div class="tab-pane fade show active" id="pills-login" role="tabpanel" aria-labelledby="tab-login">
+            <form action="/Profile/Register" method="post">
 
-    <br />
-            <input type="text" name="avatar" placeholder="Enter avatar link" />
+            <h2 class="text-center">Register</h2>
 
-    <br />
-            <input type="text" name="phone" placeholder="Enter phone number" />
+            <!-- Name input -->
+            <div class="form-outline mb-4">
+                    <label class="form-label" for="registerName">Name</label>
+                    <input type="text" name="name" id="registerName" class="form-control" />
+            </div>
 
-    <br />
-            <input type="text" name="email" placeholder="Enter email" />
+            <!-- Username input -->
+            <div class="form-outline mb-4">
+                    <label class="form-label" for="registerUsername">Phone</label>
+                    <input type="text" id="registerUsername" name="phone" class="form-control" />
+            </div>
 
-    <br />
-            <input type="password" name="password" placeholder="Enter password" />
+            <!-- Email input -->
+            <div class="form-outline mb-4">
+                    <label class="form-label" for="registerEmail">Email</label>
+                    <input type="email" name="email" id="registerEmail" class="form-control" />
+            </div>
 
-    <br />
-            <input type="password" name="confirmPassword" placeholder="Confirm password" />
+            <!-- Password input -->
+            <div class="form-outline mb-4">
+                    <label class="form-label" for="registerPassword">Password</label>
+                    <input type="password" name="password" id="registerPassword" class="form-control" />
+            </div>
 
-    <br />
+            <!-- Repeat Password input -->
+            <div class="form-outline mb-4">
+                    <label class="form-label" for="registerRepeatPassword">Repeat password</label>
+                    <input type="password" name="confirmPassword" id="registerRepeatPassword" class="form-control" />
+            </div>
 
-        <input type="submit" value="Register" class="btn btn-danger" />
-    </form>
+            <!-- Submit button -->
+            <button type="submit" class="btn btn-primary btn-block mb-3">Sign in</button>
+        </form>
+    </div>
     </div>
 }

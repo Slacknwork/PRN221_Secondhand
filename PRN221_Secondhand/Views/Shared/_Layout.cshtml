@@ -41,10 +41,8 @@
         <div class="row bg-secondary py-1 px-xl-5">
             <div class="col-lg-6 d-none d-lg-block">
                 <div class="d-inline-flex align-items-center h-100">
-                    <a class="text-body mr-3" href="">About</a>
-                    <a class="text-body mr-3" href="">Contact</a>
-                    <a class="text-body mr-3" href="">Help</a>
-                    <a class="text-body mr-3" href="">FAQs</a>
+                    <a class="text-body mr-3" href="">Admin?</a>
+
                 </div>
             </div>
             <div class="col-lg-6 text-center text-lg-right">
@@ -74,7 +72,7 @@
             <div class="col-lg-4 col-6 text-left">
                 <form action="/Home/Search" method="get">
                     <div class="input-group">
-                        <input type="text" class="form-control" name="key" placeholder="Search for products">
+                        <input type="text" value="@TempData["key"]" class="form-control" name="key" placeholder="Search for products">
                         <div class="input-group-append">
                             <button type="submit" class="input-group-text bg-transparent text-primary">
                                 <i class="fa fa-search"></i>
@@ -129,9 +127,8 @@
                     <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
                         <div class="navbar-nav mr-auto py-0">
                             <a href="/Home/Index" class="nav-item nav-link active">Home</a>
-                            <a href="MyPost/Index" class="nav-item nav-link">My Post</a>
-                            <a href="MyPost/createPost" class="nav-item nav-link">Create Post</a>
-
+                            <a href="/MyPost/Index" class="nav-item nav-link">My Post</a>
+                            <a href="/MyPost/createPost" class="nav-item nav-link">Create Post</a>
                         </div>
                         @{
                             int numOfWish = 0;
