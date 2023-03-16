@@ -18,7 +18,7 @@ namespace PRN221_Secondhand.Controllers
             if (userid != null)
             {
                 var _listWish = wishRepo.GetAll().Include(p => p.Post.Category).Include(p => p.Post).Where(p => p.Status != 0).Where(p => p.UserId == userid);
-                TempData["ERROR"] = "Get wishlist succsessfully";
+                //TempData["ERROR"] = "Get wishlist succsessfully";
                 return View(_listWish);
             }
             return View();
@@ -28,8 +28,11 @@ namespace PRN221_Secondhand.Controllers
 
             string? userid = HttpContext.Session.GetString("userid");
             var wishExits = wishRepo.GetAll().Where(p => p.PostId == id);
-            if (userid != null && wishExits == null)
+            if (userid != null)
             {
+                if (wishExits != null)
+                {
+
                     Wish wish = new Wish();
                     Guid myuuid = Guid.NewGuid();
                     wish.Id = myuuid.ToString();
@@ -38,10 +41,17 @@ namespace PRN221_Secondhand.Controllers
                     wish.PostId = id;
                     wish.Status = 1;
                     wishRepo.Create(wish);
-            }else if (wishExits != null)
+                }
+                else
+                {
+                    TempData["ERROR"] = "This post already exits in wishlist";
+                    return RedirectToAction("Index", "Home");
+                }
+            }
+            else
             {
-                TempData["ERROR"] = "This post already exits in wishlist";
-                return RedirectToAction("Index", "Home");
+                TempData["ERROR"] = "Please Login first!";
+                return RedirectToAction("Index", "Login");
             }
             return RedirectToAction("Index", "Home");
 
@@ -53,7 +63,7 @@ namespace PRN221_Secondhand.Controllers
             {
                 wish.Status = 0;
                 wishRepo.Update(wish);
-                TempData["ERROR"] = "Remove wish succsessfully";
+                //TempData["ERROR"] = "Remove wish succsessfully";
             }
             return RedirectToAction("Index");
         }
