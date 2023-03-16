@@ -2,6 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
+    <UserSecretsId>4c9cb5f4-ec21-439b-87fb-95520bb5577e</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
@@ -26,6 +27,12 @@
     <Folder Include="Areas\admin\Data\" />
     <Folder Include="Areas\admin\Models\" />
     <Folder Include="Areas\admin\Views\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Update="appsettings.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
 
