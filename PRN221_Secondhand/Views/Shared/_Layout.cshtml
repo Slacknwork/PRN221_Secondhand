@@ -1,4 +1,12 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Http
+@using Newtonsoft.Json
+@using Repository.Models
+@using Repository.Repository
+@{
+    CategoryRepository _categoryRepository = new CategoryRepository();
+    var listCate = _categoryRepository.GetAll().Where(item => item.Status != 0).ToList();
+}
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -27,12 +35,50 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="Wish" asp-action="Index">Wish index</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Post" asp-action="Index">Post</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="MyPost" asp-action="Index">MyPost</a>
                         </li>
+
                         <li class="nav-item">
                             <a class="nav-link text-dark float-right" asp-area="" asp-controller="Admin" asp-action="Index">Admin</a>
                         </li>
+
+                        <form action="/Home/Search" method="get">
+                            <input type="text" name="key" />
+                            <button type="submit">search</button>
+                        </form>
+                        @if (Context.Session.GetString("username") == null)
+                        {
+                            <li><a class="nav-link text-dark" asp-area="" asp-controller="Login" asp-action="Index">Login</a></li>
+                            <li><a class="nav-link text-dark" asp-area="" asp-controller="Register" asp-action="Index">Resgister</a></li>
+                        }else{
+                            <li><a class="nav-link text-dark" asp-area="" asp-controller="Login" asp-action="Index">@Context.Session.GetString("username")</a></li>
+                            <li><a class="nav-link text-dark" asp-area="" asp-controller="Login" asp-action="Logout">Logout</a></li>
+                        }
+
                     </ul>
+                    @{
+                        //List<Category> listcate = JsonConvert.
+                        //DeserializeObject<List<Category>>(Context.Session.GetString("cate"));
+                        string param = Context.Request.QueryString.Value;
+                        string value = "";
+                        if (param != null && !param.Equals(""))
+                            value = param.Substring(param.IndexOf("=") + 1);
+                        value = value.Replace("%20", " ");
+                    }
+                    <select class="" onchange="location = this.value;">
+                        <option value="/Home/Filter?cate=all">All</option>
+                        @foreach (var item in listCate)
+                        {
+                            if (item.Name.Equals(value))
+                            {
+                                <option value="/Home/Filter?cate=@item.Name" selected>@item.Name</option>
+                            }
+                            else
+                            {
+                                <option value="/Home/Filter?cate=@item.Name">@item.Name</option>
+                            }
+                        }
+                    </select>
                 </div>
             </div>
         </nav>
@@ -51,6 +97,12 @@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    <script>
+        var error = "@TempData["ERROR"]";
+        if (error.length != 0) {
+            alert("@TempData["ERROR"]");
+        }
+    </script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
