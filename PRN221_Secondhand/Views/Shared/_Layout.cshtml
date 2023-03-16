@@ -127,8 +127,12 @@
                     <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
                         <div class="navbar-nav mr-auto py-0">
                             <a href="/Home/Index" class="nav-item nav-link active">Home</a>
-                            <a href="/MyPost/Index" class="nav-item nav-link">My Post</a>
-                            <a href="/MyPost/createPost" class="nav-item nav-link">Create Post</a>
+                            @if (Context.Session.GetString("username") == null)
+                            {
+                                <a href="/MyPost/Index" class="nav-item nav-link">My Post</a>
+                                <a href="/MyPost/createPost" class="nav-item nav-link">Create Post</a>
+                            }
+                            
                         </div>
                         @{
                             int numOfWish = 0;
@@ -136,7 +140,7 @@
                             {
                                 WishRepository wishRepository = new WishRepository();
                                 String id = (Context.Session.GetString("userid"));
-                                numOfWish = wishRepository.GetAll().Where(a => a.UserId.Equals(id)).Count();
+                                numOfWish = wishRepository.GetAll().Where(a => a.UserId.Equals(id)&&a.Status == 1).Count();
                             }
                         }
                         <div class="navbar-nav ml-auto py-0 d-none d-lg-block">
