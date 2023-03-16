@@ -1,7 +1,12 @@
-﻿@model IEnumerable<Repository.Models.User>
+@*@model IEnumerable<Repository.Models.User>*@
 @{
     ViewData["Title"] = "User";
 }
+@using X.PagedList;
+@using X.PagedList.Mvc.Core
+@using X.PagedList.Web.Common;
+@model IPagedList<Repository.Models.User>
+
 <style>
     body {
         background-color: #f8f9fa !important
@@ -195,6 +200,7 @@
 
 
 </style>
+
 <link href="~/font-awesome/css/all.css" rel="stylesheet"/>
 <div class="mt-3 mb-4" >
     <div class="col-lg-12 mt-4 mt-lg-0">
@@ -256,25 +262,30 @@
                                     </td>
                                     <td>
                                         <ul class="list-unstyled mb-0 d-flex justify-content-end">
-                                            <li><a href="#" class="text-primary" data-toggle="tooltip" title="" data-original-title="view"><i class="far fa-eye"></i></a></li>
+                                            <li><a href="/Admin/Post?userId=@user.Id" class="text-primary" data-toggle="tooltip" title="" data-original-title="view"><i class="far fa-eye"></i></a></li>
                                             @*<li><a href="#" class="text-info" data-toggle="tooltip" title="" data-original-title="Edit"><i class="fas fa-pencil-alt"></i></a></li>*@
-                                            <li><a asp-controller="Admin" asp-action="BanUser" class="@ban_color" data-toggle="tooltip" title="" data-original-title="Ban"><i class="@ban_action"></i></a></li>
+                                            <li><a href="/Admin/BanUser?userId=@user.Id" class="@ban_color" data-toggle="tooltip" title="" data-original-title="Ban"><i class="@ban_action"></i></a></li>
                                         </ul>
+                                        
                                     </td>
                                 </tr>
                             }
                         </tbody>
+                    
                     </table>
                     <div class="text-center mt-3 mt-sm-3">
-                        <ul class="pagination justify-content-center mb-0">
-                            <li class="page-item disabled"> <span class="page-link">Prev</span> </li>
-                            <li class="page-item active" aria-current="page"><span class="page-link">1 </span> <span class="sr-only">(current)</span></li>
-                            <li class="page-item"><a class="page-link" href="#">2</a></li>
-                            <li class="page-item"><a class="page-link" href="#">3</a></li>
-                            <li class="page-item"><a class="page-link" href="#">...</a></li>
-                            <li class="page-item"><a class="page-link" href="#">25</a></li>
-                            <li class="page-item"> <a class="page-link" href="#">Next</a> </li>
-                        </ul>
+                        @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+                        @Html.PagedListPager((IPagedList)Model, page =>  Url.Action(
+                            "Users", 
+                            new { page }),
+                            new PagedListRenderOptions()
+                            {
+                                UlElementClasses = new List<string> {"justify-content-center",
+                                    "pagination"},
+                                LiElementClasses = new List<string> {"page-item",
+                                    "page-link"}
+                            }
+                        )
                     </div>
                 </div>
             </div>
