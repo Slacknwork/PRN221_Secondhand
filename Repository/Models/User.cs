@@ -9,6 +9,7 @@ namespace Repository.Models
     {
         public User()
         {
+            Posts = new HashSet<Post>();
             Wishes = new HashSet<Wish>();
         }
 
@@ -23,6 +24,7 @@ namespace Repository.Models
         public string ExternalLoginId { get; set; }
         public int? Status { get; set; }
 
+        public virtual ICollection<Post> Posts { get; set; }
         public virtual ICollection<Wish> Wishes { get; set; }
     }
 }

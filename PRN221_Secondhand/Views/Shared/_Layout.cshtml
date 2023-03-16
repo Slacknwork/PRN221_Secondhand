@@ -6,62 +6,7 @@
     CategoryRepository _categoryRepository = new CategoryRepository();
     var listCate = _categoryRepository.GetAll().Where(item => item.Status != 0).ToList();
 }
-    @*<header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">PRN221_Secondhand</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
-                        <form action="/Home/Search" method="get">
-                            <input type="text" name="key" />
-                            <button type="submit">search</button>
-                        </form>
-                        @if (Context.Session.GetString("username") == null)
-                        {
-                            <li><a class="nav-link text-dark" asp-area="" asp-controller="Login" asp-action="Index">Login</a></li>
-                            <li><a class="nav-link text-dark" asp-area="" asp-controller="Register" asp-action="Index">Resgister</a></li>
-                        }else{
-                            <li><a class="nav-link text-dark" asp-area="" asp-controller="Login" asp-action="Index">@Context.Session.GetString("username")</a></li>
-                            <li><a class="nav-link text-dark" asp-area="" asp-controller="Login" asp-action="Logout">Logout</a></li>
-                        }
-                    </ul>
-                    @{
-                        //List<Category> listcate = JsonConvert.
-                        //DeserializeObject<List<Category>>(Context.Session.GetString("cate"));
-                        string param = Context.Request.QueryString.Value;
-                        string value = "";
-                        if (param != null && !param.Equals(""))
-                            value = param.Substring(param.IndexOf("=") + 1);
-                        value = value.Replace("%20", " ");
-                    }
-                    <select class="" onchange="location = this.value;">
-                        <option value="/Home/Filter?cate=all">All</option>
-                        @foreach (var item in listCate)
-                        {
-                            if (item.Name.Equals(value))
-                            {
-                                <option value="/Home/Filter?cate=@item.Name" selected>@item.Name</option>
-                            }
-                            else
-                            {
-                                <option value="/Home/Filter?cate=@item.Name">@item.Name</option>
-                            }
-                        }
-                    </select>
-                </div>
-            </div>
-        </nav>
-    </header>*@
+
     <!-- Topbar Start -->
     <!DOCTYPE html>
     <html lang="en">
