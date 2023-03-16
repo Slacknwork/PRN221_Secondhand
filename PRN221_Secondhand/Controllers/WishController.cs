@@ -41,9 +41,9 @@ namespace PRN221_Secondhand.Controllers
             }else if (wishExits != null)
             {
                 TempData["ERROR"] = "This post already exits in wishlist";
-                return RedirectToAction("Index", "MyPost");
+                return RedirectToAction("Index", "Home");
             }
-            return RedirectToAction("Index", "MyPost");
+            return RedirectToAction("Index", "Home");
 
         }
         public IActionResult Remove(string id)
