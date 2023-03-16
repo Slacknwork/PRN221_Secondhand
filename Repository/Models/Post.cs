@@ -13,11 +13,11 @@ namespace Repository.Models
             Wishes = new HashSet<Wish>();
         }
 
-        public byte[] Id { get; set; }
+        public string Id { get; set; }
         public string Name { get; set; }
         public string Image { get; set; }
         public string Description { get; set; }
-        public byte[] CategoryId { get; set; }
+        public string CategoryId { get; set; }
         public decimal? Price { get; set; }
         public DateTime? Created { get; set; }
         public DateTime? Updated { get; set; }

@@ -12,7 +12,7 @@ namespace Repository.Models
             Wishes = new HashSet<Wish>();
         }
 
-        public byte[] Id { get; set; }
+        public string Id { get; set; }
         public string Name { get; set; }
         public string Avatar { get; set; }
         public DateTime? Created { get; set; }
@@ -20,7 +20,7 @@ namespace Repository.Models
         public string Phone { get; set; }
         public string Email { get; set; }
         public string Password { get; set; }
-        public byte[] ExternalLoginId { get; set; }
+        public string ExternalLoginId { get; set; }
         public int? Status { get; set; }
 
         public virtual ICollection<Wish> Wishes { get; set; }
