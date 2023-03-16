@@ -2,6 +2,8 @@
 using Microsoft.AspNetCore.Mvc;
 using Repository.Repository;
 using Repository.Models;
+using System;
+using System.Linq;
 
 namespace PRN221_Secondhand.Controllers
 {
@@ -11,7 +13,7 @@ namespace PRN221_Secondhand.Controllers
         // GET: CategoryController
         public ActionResult Index()
         {
-            var list = categoryRepository.GetAll();
+            var list = categoryRepository.GetAll().Where(category => category.Status != 0).ToList();
             return View(list);
         }
 
@@ -35,6 +37,8 @@ namespace PRN221_Secondhand.Controllers
         {
             try
             {
+                category.Id = Guid.NewGuid().ToString();
+
                 categoryRepository.Create(category);
                 return RedirectToAction(nameof(Index));
             }
@@ -60,7 +64,6 @@ namespace PRN221_Secondhand.Controllers
             {
                 var categoryEntity = categoryRepository.Get(id);
                 categoryEntity.Image = category.Image;
-                categoryEntity.Status = category.Status;
                 categoryEntity.Description = category.Description;
                 categoryEntity.Name = category.Name;
 
@@ -88,7 +91,10 @@ namespace PRN221_Secondhand.Controllers
             try
             {
                 var categoryEntity = categoryRepository.Get(id);
-                categoryRepository.Delete(categoryEntity);
+
+                categoryEntity.Status = 0;
+                categoryRepository.Update(categoryEntity);
+
                 return RedirectToAction(nameof(Index));
             }
             catch
