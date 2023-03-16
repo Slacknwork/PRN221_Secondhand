@@ -30,6 +30,8 @@ namespace PRN221_Secondhand
             services.AddDbContext<SecondhandContext>(options => options.UseSqlServer(
                 Configuration.GetConnectionString("Secondhand")
                 ));
+
+            services.AddSession();
         }   
 
 
