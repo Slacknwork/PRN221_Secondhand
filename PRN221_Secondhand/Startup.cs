@@ -30,9 +30,9 @@ namespace PRN221_Secondhand
             services.AddDbContext<SecondhandContext>(options => options.UseSqlServer(
                 Configuration.GetConnectionString("Secondhand")
                 ));
-
             services.AddSession();
-        }   
+
+        }
 
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -66,7 +66,7 @@ namespace PRN221_Secondhand
             {
                 endpoints.MapControllerRoute(
                   name: "areas",
-                  pattern: "admin/{controller=Home}/{action=Index}/{id?}"
+                  pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}"
                 );
             });
         }
