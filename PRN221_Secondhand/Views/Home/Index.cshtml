@@ -21,7 +21,7 @@
                 <div class="text-center py-4">
                         <a class="h6 text-decoration-none text-truncate" href="Post?id=@item.Id">@item.Name</a>
                     <div class="d-flex align-items-center justify-content-center mt-2">
-                        <h5>@item.Price</h5>
+                            <h5>@String.Format("{0:#,##0 vnd;(#,##0 vnd);Zero}", item.Price)</h5>
                     </div>
                 </div>
             </div>

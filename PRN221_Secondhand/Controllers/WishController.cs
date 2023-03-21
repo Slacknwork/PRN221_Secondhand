@@ -13,7 +13,11 @@ namespace PRN221_Secondhand.Controllers
         WishRepository wishRepo = new WishRepository();
         public IActionResult Index()
         {
-
+            if (HttpContext.Session.GetString("userid") == null)
+            {
+                TempData["ERROR"] = "You must login";
+                return RedirectToAction("Index", "Login");
+            }
             var userid = HttpContext.Session.GetString("userid");
             if (userid != null)
             {
@@ -27,10 +31,10 @@ namespace PRN221_Secondhand.Controllers
         {
 
             string? userid = HttpContext.Session.GetString("userid");
-            var wishExits = wishRepo.GetAll().Where(p => p.PostId == id);
+            var wishExits = wishRepo.GetAll().Where(p => p.PostId.Equals(id)&&p.UserId.Equals(userid));
             if (userid != null)
             {
-                if (wishExits != null)
+                if (wishExits== null)
                 {
 
                     Wish wish = new Wish();
@@ -53,6 +57,7 @@ namespace PRN221_Secondhand.Controllers
                 TempData["ERROR"] = "Please Login first!";
                 return RedirectToAction("Index", "Login");
             }
+            TempData["ERROR"] = "Added to wishlist";
             return RedirectToAction("Index", "Home");
 
         }

@@ -13,6 +13,8 @@ namespace PRN221_Secondhand.Controllers
         // GET: TagController
         public ActionResult Index()
         {
+            if (HttpContext.Session.GetString("adminid") == null)
+                return RedirectToAction("Login","Admin");
             var list = tagRepository.GetAll().Where(tag => tag.Status != 0).ToList();
             return View(list);
         }
@@ -20,6 +22,8 @@ namespace PRN221_Secondhand.Controllers
         // GET: TagController/Details/5
         public ActionResult Details(string id)
         {
+            if (HttpContext.Session.GetString("adminid") == null)
+                return RedirectToAction("Login", "Admin");
             var tag = tagRepository.Get(id);
             return View(tag);
         }
@@ -27,6 +31,8 @@ namespace PRN221_Secondhand.Controllers
         // GET: TagController/Create
         public ActionResult Create()
         {
+            if (HttpContext.Session.GetString("adminid") == null)
+                return RedirectToAction("Login", "Admin");
             return View();
         }
 
@@ -35,6 +41,8 @@ namespace PRN221_Secondhand.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(Tag tag)
         {
+            if (HttpContext.Session.GetString("adminid") == null)
+                return RedirectToAction("Login", "Admin");
             try
             {
                 tag.Id = Guid.NewGuid().ToString();
@@ -50,6 +58,8 @@ namespace PRN221_Secondhand.Controllers
         // GET: TagController/Edit/5
         public ActionResult Edit(string id)
         {
+            if (HttpContext.Session.GetString("adminid") == null)
+                return RedirectToAction("Login", "Admin");
             var tag = tagRepository.Get(id);
             return View(tag);
         }
@@ -61,6 +71,8 @@ namespace PRN221_Secondhand.Controllers
         {
             try
             {
+                if (HttpContext.Session.GetString("adminid") == null)
+                    return RedirectToAction("Login", "Admin");
                 var tagEntity = tagRepository.Get(id);
                 tagEntity.Value = tag.Value;
                 tagEntity.Type = tag.Type;
@@ -77,6 +89,8 @@ namespace PRN221_Secondhand.Controllers
         // GET: TagController/Delete/5
         public ActionResult Delete(string id)
         {
+            if (HttpContext.Session.GetString("adminid") == null)
+                return RedirectToAction("Login", "Admin");
             var tag = tagRepository.Get(id);
             return View(tag);
         }
@@ -86,6 +100,8 @@ namespace PRN221_Secondhand.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Delete(string id, IFormCollection collection)
         {
+            if (HttpContext.Session.GetString("adminid") == null)
+                return RedirectToAction("Login", "Admin");
             try
             {
                 var tagEntity = tagRepository.Get(id);

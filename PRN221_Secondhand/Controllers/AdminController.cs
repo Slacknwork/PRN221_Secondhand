@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
@@ -27,6 +28,8 @@ namespace PRN221_Secondhand.Controllers
 
         public IActionResult Users(int? page)
         {
+            if(HttpContext.Session.GetString("adminid")==null)
+                return RedirectToAction("Login");
             var objUserList = _userRepository.GetAll();
             int pageSize = 5;
             int pageNumber = (page ?? 1);
@@ -34,8 +37,10 @@ namespace PRN221_Secondhand.Controllers
         }
 
         public IActionResult Post(string? userId, int? page)
-        {   
-            if(userId == null)
+        {
+            if (HttpContext.Session.GetString("adminid") == null)
+                return RedirectToAction("Login", "Admin");
+            if (userId == null)
             {
                 return NotFound();
             }
@@ -47,6 +52,8 @@ namespace PRN221_Secondhand.Controllers
         }
         public ActionResult HidenPost(string? postId, string userId)
         {
+            if (HttpContext.Session.GetString("adminid") == null)
+                return RedirectToAction("Login", "Admin");
             if (postId == null)
             {
                 return NotFound();
@@ -68,6 +75,22 @@ namespace PRN221_Secondhand.Controllers
         {
             return View();
         }
+        [HttpPost]
+        [ActionName("Login")]
+        public IActionResult Login(string txtemail,string txtpass)
+        {
+            AdminRepository adminRepository= new AdminRepository();
+            Admin user = adminRepository.GetAll().Where(a => a.Username.Equals(txtemail) 
+                && a.Password.Equals(txtpass) && a.Status==1).FirstOrDefault();
+            if (user == null)
+            {
+                TempData["ERROR"] = "Wrong Email or Password";
+                return RedirectToAction("Index");
+            }
+            HttpContext.Session.SetString("adminid", user.Id);
+            HttpContext.Session.SetString("username", user.Name);
+            return RedirectToAction("Users");
+        }
 
         public IActionResult Register()
         {
@@ -83,7 +106,9 @@ namespace PRN221_Secondhand.Controllers
         [ActionName("BanUser")]
         public ActionResult BanUser(string? userId)
         {
-            if(userId == null)
+            if (HttpContext.Session.GetString("adminid") == null)
+                return RedirectToAction("Login", "Admin");
+            if (userId == null)
             {
                 return NotFound();
             }

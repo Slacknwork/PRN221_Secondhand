@@ -18,10 +18,10 @@ namespace PRN221_Secondhand.Controllers
         public IActionResult Login(string txtemail,string txtpass)
         {
             userRepository = new UserRepository();
-            User user =  userRepository.GetAll().Where(a=> a.Email.Equals(txtemail)&&a.Password.Equals(txtpass)).FirstOrDefault();
+            User user =  userRepository.GetAll().Where(a=> a.Email.Equals(txtemail)&&a.Password.Equals(txtpass)&&a.Status==1).FirstOrDefault();
             if (user == null) 
             {
-                TempData["ERROR"] = "Wrong Email or Password";
+                TempData["ERROR"] = "Wrong Email or Password";  
                 return RedirectToAction("Index"); 
             }
             HttpContext.Session.SetString("userid", user.Id);

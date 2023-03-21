@@ -13,6 +13,8 @@ namespace PRN221_Secondhand.Controllers
         // GET: CategoryController
         public ActionResult Index()
         {
+            if (HttpContext.Session.GetString("adminid") == null)
+                return RedirectToAction("Login", "Admin");
             var list = categoryRepository.GetAll().Where(category => category.Status != 0).ToList();
             return View(list);
         }
@@ -35,6 +37,8 @@ namespace PRN221_Secondhand.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(Category category)
         {
+            if (HttpContext.Session.GetString("adminid") == null)
+                return RedirectToAction("Login", "Admin");
             try
             {
                 category.Id = Guid.NewGuid().ToString();
@@ -51,6 +55,8 @@ namespace PRN221_Secondhand.Controllers
         // GET: CategoryController/Edit/5
         public ActionResult Edit(string id)
         {
+            if (HttpContext.Session.GetString("adminid") == null)
+                return RedirectToAction("Login", "Admin");
             var category = categoryRepository.Get(id);
             return View(category);
         }
@@ -60,6 +66,8 @@ namespace PRN221_Secondhand.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit(string id, Category category)
         {
+            if (HttpContext.Session.GetString("adminid") == null)
+                return RedirectToAction("Login", "Admin");
             try
             {
                 var categoryEntity = categoryRepository.Get(id);
@@ -79,6 +87,8 @@ namespace PRN221_Secondhand.Controllers
         // GET: CategoryController/Delete/5
         public ActionResult Delete(string id)
         {
+            if (HttpContext.Session.GetString("adminid") == null)
+                return RedirectToAction("Login", "Admin");
             var category = categoryRepository.Get(id);
             return View(category);
         }
@@ -88,6 +98,8 @@ namespace PRN221_Secondhand.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Delete(string id, IFormCollection collection)
         {
+            if (HttpContext.Session.GetString("adminid") == null)
+                return RedirectToAction("Login", "Admin");
             try
             {
                 var categoryEntity = categoryRepository.Get(id);

@@ -25,6 +25,8 @@ namespace PRN221_Secondhand.Controllers
         [ActionName("Index")]
         public IActionResult Index()
         {
+            if (HttpContext.Session.GetString("adminid") != null)
+                return RedirectToAction("Users", "Admin");
             PostRepository _postRepo = new PostRepository();
             var _listPost = _postRepo.GetAll().Where(item => item.Status != 0).ToList();
             return View(_listPost);
@@ -57,6 +59,7 @@ namespace PRN221_Secondhand.Controllers
             {
                 return RedirectToAction("Index", "Home");
             }
+            TempData["cate"] = cate;
             PostRepository _postRepo = new PostRepository();
             var _listPost = _postRepo.GetAll().Where(item => item.Status != 0 && item.Category.Name.Equals(cate)).ToList();
             return View(_listPost);

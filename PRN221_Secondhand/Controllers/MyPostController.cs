@@ -26,7 +26,7 @@ namespace PRN221_Secondhand.Controllers
             string? userid = HttpContext.Session.GetString("userid");
             if (userid == null) return View();
             //var myWish = wishRepo.GetAll().Where(w => w.PostId == );
-            int pageSize = 8;
+            int pageSize = 1;
             int pageNumber = (page ?? 1);
             var listPost = postRepository.GetAll().Include(p => p.User).Include(p => p.Category).Where(p => p.UserId == userid);
             return View(listPost.ToPagedList(pageNumber,pageSize));
